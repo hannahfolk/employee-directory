@@ -1,0 +1,12 @@
+.remove {
+  color: #ff1744;
+  cursor: pointer;
+}
+
+.remove:hover {
+  color: #d50000;
+}
+
+.employee-list-item {
+  font-weight: normal;
+}

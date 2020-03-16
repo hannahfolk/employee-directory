@@ -1,0 +1,16 @@
+ul {
+    padding-inline-start: 0px;
+    margin-bottom: 5px;
+}
+
+.dropdown-item {
+    color: lightgrey;
+}
+
+.remove-filter {
+    cursor: pointer;
+}
+  
+.remove-filter:hover {
+    color: darkgrey;
+}

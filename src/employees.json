@@ -1,0 +1,312 @@
+[
+  {
+    "id": 1,
+    "firstName": "Carrie",
+    "lastName": "Fisher",
+    "department": "Acting",
+    "role": "Leia Organa",
+    "email": "carrie.fisher@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "10/21/1956"
+  },
+  {
+    "id": 2,
+    "firstName": "Mark",
+    "lastName": "Hamill",
+    "department": "Acting",
+    "role": "Luke Skywalker",
+    "email": "mark.hamill@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "09/25/1951"
+  },
+  {
+    "id": 3,
+    "firstName": "Adam",
+    "lastName": "Driver",
+    "department": "Acting",
+    "role": "Kylo Ren",
+    "email": "adam.driver@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "11/19/1983"
+  },
+  {
+    "id": 4,
+    "firstName": "Daisy",
+    "lastName": "Ridley",
+    "department": "Acting",
+    "role": "Rey",
+    "email": "daisy.ridley@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "04/10/1992"
+  },
+  {
+    "id": 5,
+    "firstName": "John",
+    "lastName": "Boyega",
+    "department": "Acting",
+    "role": "Finn",
+    "email": "john.boyega@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "03/17/1992"
+  },
+  {
+    "id": 6,
+    "firstName": "Oscar",
+    "lastName": "Isaac",
+    "department": "Acting",
+    "role": "Poe Dameron",
+    "email": "oscar.isaac@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "03/09/1979"
+  },
+  {
+    "id": 7,
+    "firstName": "Anthony",
+    "lastName": "Daniels",
+    "department": "Acting",
+    "role": "C-3PO",
+    "email": "anthony.daniels@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "02/21/1946"
+  },
+  {
+    "id": 8,
+    "firstName": "Naomi",
+    "lastName": "Ackie",
+    "department": "Acting",
+    "role": "Jannah",
+    "email": "naomi.ackie@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "11/02/1992"
+  },
+  {
+    "id": 9,
+    "firstName": "Domhnall",
+    "lastName": "Gleeson",
+    "department": "Acting",
+    "role": "General Hux",
+    "email": "domhnall.gleeson@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "05/12/1983"
+  },
+  {
+    "id": 10,
+    "firstName": "Richard E.",
+    "lastName": "Grant",
+    "department": "Acting",
+    "role": "General Pryde",
+    "email": "richard.e.grant@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "05/05/1957"
+  },
+  {
+    "id": 11,
+    "firstName": "Lupita",
+    "lastName": "Nyong'o",
+    "department": "Acting",
+    "role": "Maz Kanata",
+    "email": "lupita.nyongo@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "03/01/1983"
+  },
+  {
+    "id": 12,
+    "firstName": "Keri",
+    "lastName": "Russell",
+    "department": "Acting",
+    "role": "Zorii Bliss",
+    "email": "keri.russell@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "03/23/1976"
+  },
+  {
+    "id": 13,
+    "firstName": "Joonas",
+    "lastName": "Suotamo",
+    "department": "Acting",
+    "role": "Chewbacca",
+    "email": "joonas.suotamo@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "10/03/1986"
+  },
+  {
+    "id": 14,
+    "firstName": "Kelly Marie",
+    "lastName": "Tran",
+    "department": "Acting",
+    "role": "Rose Tico",
+    "email": "kelly.marie.tran@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "01/17/1989"
+  },
+  {
+    "id": 15,
+    "firstName": "Ian",
+    "lastName": "McDiarmid",
+    "department": "Acting",
+    "role": "Emperor Palpatine",
+    "email": "ian.mcdiarmid@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "08/11/1944"
+  },
+  {
+    "id": 16,
+    "firstName": "JJ",
+    "lastName": "Abrams",
+    "department": "Directing",
+    "role": "Director",
+    "email": "jj.abrams@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "06/27/1966"
+  },
+  {
+    "id": 17,
+    "firstName": "Chris",
+    "lastName": "Terrio",
+    "department": "Writing",
+    "role": "Screenplay writer",
+    "email": "chris.terrio@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "12/31/1976"
+  },
+  {
+    "id": 18,
+    "firstName": "Derek",
+    "lastName": "Connolly",
+    "department": "Writing",
+    "role": "Story writer",
+    "email": "derek.connolly@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "01/01/1976"
+  },
+  {
+    "id": 19,
+    "firstName": "Colin",
+    "lastName": "Trevorrow",
+    "department": "Writing",
+    "role": "Story writer",
+    "email": "colin.trevorrow@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "09/13/1976"
+  },
+  {
+    "id": 20,
+    "firstName": "Nour",
+    "lastName": "Dardari",
+    "department": "Producing",
+    "role": "Associate producer",
+    "email": "nour.dardari@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "01/01/1962"
+  },
+  {
+    "id": 21,
+    "firstName": "Tommy",
+    "lastName": "Gormley",
+    "department": "Producing",
+    "role": "Executive producer",
+    "email": "tommy.gormley@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "05/03/1968"
+  },
+  {
+    "id": 22,
+    "firstName": "Callum",
+    "lastName": "Greene",
+    "department": "Producing",
+    "role": "Executive producer",
+    "email": "callum.greene@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "02/01/1971"
+  },
+  {
+    "id": 23,
+    "firstName": "Kathleen",
+    "lastName": "Kennedy",
+    "department": "Producing",
+    "role": "Producer",
+    "email": "kathleen.kennedy@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "06/05/1953"
+  },
+  {
+    "id": 24,
+    "firstName": "Jason D.",
+    "lastName": "McGatlin",
+    "department": "Producing",
+    "role": "Executive producer",
+    "email": "jason.d.mcgatlin@starwars.com",
+    "phone": "(555) 555-555",
+    "DOB": "01/01/1970"
+  },
+  {
+    "id": 25,
+    "firstName": "Michelle",
+    "lastName": "Rejwan",
+    "department": "Producing",
+    "role": "Producer",
+    "email": "michelle.rejwan@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "03/08/1982"
+  },
+  {
+    "id": 26,
+    "firstName": "John",
+    "lastName": "Williams",
+    "department": "Music",
+    "role": "Composer",
+    "email": "john.williams@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "02/08/1932"
+  },
+  {
+    "id": 27,
+    "firstName": "Dan",
+    "lastName": "Mindel",
+    "department": "Cinematography",
+    "role": "Cinematographer",
+    "email": "dan.mindel@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "05/27/1958"
+  },
+  {
+    "id": 28,
+    "firstName": "Nina",
+    "lastName": "Gold",
+    "department": "Casting",
+    "role": "Casting director",
+    "email": "nina.gold@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "01/01/1967"
+  },
+  {
+    "id": 29,
+    "firstName": "April",
+    "lastName": "Webster",
+    "department": "Casting",
+    "role": "Casting associate",
+    "email": "april.webster@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "01/01/1970"
+  },
+  {
+    "id": 30,
+    "firstName": "Alyssa",
+    "lastName": "Weisberg",
+    "department": "Casting",
+    "role": "Casting associate",
+    "email": "alyssa.weisberg@starwars.com",
+    "phone": "(555) 555-555",
+    "DOB": "01/01/1970"
+  },
+  {
+    "id": 31,
+    "firstName": "George",
+    "lastName": "Lucas",
+    "department": "Writing",
+    "role": "Character creator",
+    "email": "george.lucas@starwars.com",
+    "phone": "(555) 555-5555",
+    "DOB": "05/14/1944"
+  }
+]
