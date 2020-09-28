@@ -1,451 +1,268 @@
-import React from "react";
-import Title from "../Title";
+import React, { Component } from "react";
+import Table from "react-bootstrap/Table";
+import Search from "../Search";
 import EmployeeListItem from "../EmployeeListItem";
-import FilterButton from "../FilterButton";
-import SortButton from "../SortButton";
-import employees from "../../employees.json";
+import API from "../../utils/API";
 
-class EmployeeTable extends React.Component {
-    state = {
-        employees,
-        filterOptions: "",
-        sortView: "",
-        sortChoice: "",
-        orderChoice: ""
-    };
+import { ReactComponent as UpIcon } from "../../assets/chevron-up.svg";
+import { ReactComponent as DownIcon } from "../../assets/chevron-down.svg";
 
-    componentDidMount() {
+import "./style.css";
 
-        this.setState({
-            filterOptions:
-            <>
-                <li className="dropdown-item" onClick={this.filter}>Acting</li>
-                <li className="dropdown-item" onClick={this.filter}>Directing</li>
-                <li className="dropdown-item" onClick={this.filter}>Writing</li>
-                <li className="dropdown-item" onClick={this.filter}>Producing</li>
-                <li className="dropdown-item" onClick={this.filter}>Music</li>
-                <li className="dropdown-item" onClick={this.filter}>Cinematography</li>
-                <li className="dropdown-item" onClick={this.filter}>Casting</li>
-            </>,
-            sortView: 
-            <>
-                <form>
-                    <div className="form-group row">
-                        <div className="col">
-                            <div className="form-check">
-                                <input 
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="sortOptions"
-                                    id="nameSort"
-                                    value="nameSort"
-                                    onChange={this.handleSortChange}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="nameSort"
-                                >
-                                    Name
-                                </label>
-                            </div>
-                            <div className="form-check">
-                                <input 
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="sortOptions"
-                                    id="departmentSort"
-                                    value="departmentSort"
-                                    onChange={this.handleSortChange}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="departmentSort"
-                                >
-                                    Department
-                                </label>
-                            </div>
-                            <div className="form-check">
-                                <input 
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="sortOptions"
-                                    id="roleSort"
-                                    value="roleSort"
-                                    onChange={this.handleSortChange}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="roleSort"
-                                >
-                                    Role
-                                </label>
-                            </div>
-                            <div className="form-check">
-                                <input 
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="sortOptions"
-                                    id="emailSort"
-                                    value="emailSort"
-                                    onChange={this.handleSortChange}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="emailSort"
-                                >
-                                    Email
-                                </label>
-                            </div>
-                            <div className="form-check">
-                                <input 
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="sortOptions"
-                                    id="DOBSort"
-                                    value="DOBSort"
-                                    onChange={this.handleSortChange}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="DOBSort"
-                                >    
-                                    DOB
-                                </label>
-                            </div>
-                        </div>
-                        <div className="col">
-                            <div className="form-check">
-                                <input
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="orderOptions"
-                                    id="ascending"
-                                    value="ascending"
-                                    onChange={this.handleOrderChange}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="ascending"
-                                >
-                                    Ascending
-                                </label>
-                            </div>
-                            <div className="form-check">
-                                <input
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="orderOptions"
-                                    id="descending"
-                                    value="descending"
-                                    onChange={this.handleOrderChange}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="descending"
-                                >
-                                    Descending
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <div className="col">
-                            <button
-                                className="btn btn-light"
-                                onClick={this.sort}
-                            >
-                                Add sort
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </>
-        });
+class EmployeeTable extends Component {
+  state = {
+    originalEmployees: [],
+    employees: [],
+    isToggleUp: true,
+    sorted: {
+      Name: true,
+      Email: false,
+      Phone: false,
+      DOB: false,
+    },
+    search: {
+      Name: "",
+      Email: "",
+      Phone: "",
+      DOB: "",
+    },
+  };
+
+  componentDidMount() {
+    API.getEmployees().then((res) => {
+      res.data.results.map((employee) => {
+        return (employee.dob.date = new Date(
+          employee.dob.date
+        ).toLocaleDateString("en-US"));
+      });
+
+      res.data.results.sort((a, b) => (a.name.first > b.name.first ? 1 : -1));
+      this.setState({
+        originalEmployees: res.data.results,
+        employees: res.data.results,
+      });
+    });
+  }
+
+  handleChange = (event) => {
+    const { name, value } = event.target;
+
+    if (value === "") {
+      this.setState({
+        search: { Name: "", Email: "", Phone: "", DOB: "" },
+        employees: this.state.originalEmployees,
+      });
+      return;
     }
 
-    removeEmployee = id => {
-        // Filter this.state.employees for employees with an id not equal to the id being removed
-        const employees = this.state.employees.filter(employee => employee.id !== id);
-        // Set this.state.employees equal to the new employees array
-        this.setState({ employees });
-    };
+    const filtered = this.state.employees.filter((employee) => {
+      let filterRequirements;
+      switch (name) {
+        case "Name":
+          filterRequirements =
+            employee.name.first.toLowerCase().startsWith(value.toLowerCase()) ||
+            employee.name.last.toLowerCase().startsWith(value.toLowerCase()) ||
+            `${employee.name.first} ${employee.name.last}`
+              .toLowerCase()
+              .startsWith(value.toLowerCase());
+          break;
+        case "Email":
+          filterRequirements = employee.email.startsWith(value.toLowerCase());
+          break;
+        case "Phone":
+          filterRequirements = employee.phone.startsWith(`(${value}`);
+          break;
+        case "DOB":
+          filterRequirements = employee.dob.date.includes(value);
+          break;
+        default:
+          return true;
+      }
+      return filterRequirements;
+    });
 
-    // Filter employees array by department
-    filter = event => {
-        // Grabs the filter choice picked by the user
-        const choice = event.target.innerHTML;
+    this.setState({
+      search: { ...this.state.search, [name]: value },
+      employees: filtered,
+    });
+  };
 
-        // Filters based on the user-inputted choice
-        const employees = this.state.employees.filter(employee => {
-            return employee.department === choice;
-        });
-
-        // Sets the employees table to the filtered employee list and changes the filter option to just the remove filter button
-        this.setState({
-            employees,
-            filterOptions: <li className="dropdown-item" onClick={this.handleRemoveFilter}>Remove filter</li>
-        });
-    };
-
-    handleRemoveFilter = () => {
-        // Reset the filter options and the employee array
-        this.setState({
-            employees,
-            filterOptions:
-            <>
-                <li className="dropdown-item" onClick={this.filter}>Acting</li>
-                <li className="dropdown-item" onClick={this.filter}>Directing</li>
-                <li className="dropdown-item" onClick={this.filter}>Writing</li>
-                <li className="dropdown-item" onClick={this.filter}>Producing</li>
-                <li className="dropdown-item" onClick={this.filter}>Music</li>
-                <li className="dropdown-item" onClick={this.filter}>Cinematography</li>
-                <li className="dropdown-item" onClick={this.filter}>Casting</li>
-            </>
-        });
-    };
-
-    sort = event => {
-        event.preventDefault();
-        let employees;
-
-        // Grabs the choices picked by the user in the sort dropdown menu
-        const sortChoice = this.state.sortChoice;
-        const orderChoice = this.state.orderChoice;
-        
-        // Sort by the different options
-            // Sort by last name
-        if (sortChoice === "nameSort" && orderChoice === "ascending") {
-            employees = this.state.employees.sort((a, b) => (a.lastName > b.lastName) ? 1 : -1);
-        } else if (sortChoice === "nameSort" && orderChoice === "descending") {
-            employees = this.state.employees.sort((a, b) => (a.lastName < b.lastName) ? 1 : -1);
-            // Sort by department name
-        } else if (sortChoice === "departmentSort" && orderChoice === "ascending") {
-            employees = this.state.employees.sort((a, b) => (a.department > b.department) ? 1 : -1);
-        } else if (sortChoice === "departmentSort" && orderChoice === "descending") {
-            employees = this.state.employees.sort((a, b) => (a.department < b.department) ? 1 : -1);
-            // Sort by role name
-        } else if (sortChoice === "roleSort" && orderChoice === "ascending") {
-            employees = this.state.employees.sort((a, b) => (a.role > b.role) ? 1 : -1);
-        } else if (sortChoice === "roleSort" && orderChoice === "descending") {
-            employees = this.state.employees.sort((a, b) => (a.role < b.role) ? 1 : -1);
-            // Sort by email
-        } else if (sortChoice === "emailSort" && orderChoice === "ascending") {
-            employees = this.state.employees.sort((a, b) => (a.email > b.email) ? 1 : -1);
-        } else if (sortChoice === "emailSort" && orderChoice === "descending") {
-            employees = this.state.employees.sort((a, b) => (a.email < b.email) ? 1 : -1);
-            // Sort by date of birth
-        } else if (sortChoice === "DOBSort" && orderChoice === "ascending") {
-            employees = this.state.employees.sort((a, b) => (new Date(a.DOB) > new Date(b.DOB)) ? 1 : -1);
-        } else if (sortChoice === "DOBSort" && orderChoice === "descending") {
-            employees = this.state.employees.sort((a, b) => (new Date(a.DOB) < new Date(b.DOB)) ? 1 : -1);
-        };
-
-        // Change the state of the employees array to the newly sorted array
-        // Change the sortView to just a button that says "Remove sort"
-        this.setState({
-            employees,
-            sortView: <ul>
-                        <li className="dropdown-item" onClick={this.handleRemoveSort}>Remove sort</li>
-                      </ul>
-        });
-    };
-
-    handleSortChange = event => {
-        // Pull the sort choice from the sort dropdown menu
-        this.setState({ sortChoice: event.target.value });
-    };
-
-    handleOrderChange = event => {
-        // Pull the order choice from the sort dropdown menu
-        this.setState({ orderChoice: event.target.value });
+  handleBackspace = (event) => {
+    if (event.keyCode === 8) {
+      this.setState({
+        employees: this.state.originalEmployees,
+      });
     }
+  };
 
-    handleRemoveSort = () => {
-        // Reset the sort for the employees array
-        const employees = this.state.employees.sort((a, b) => (a.id > b.id) ? 1 : -1);
+  handleFormSubmit = (event) => {
+    event.preventDefault();
+  };
 
-        // Set the state to the unsorted array, and the sortView dropdown menu back to the list of options
-        this.setState({
-            employees,
-            sortView: 
-            <>
-                <form onClick={this.stopPropagation} onSubmit={this.sort}>
-                    <div className="form-group row">
-                        <div className="col">
-                            <div className="form-check">
-                                <input 
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="sortOptions"
-                                    id="nameSort"
-                                    value="nameSort"
-                                    onChange={this.handleSortChange}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="nameSort"
-                                >
-                                    Name
-                                </label>
-                            </div>
-                            <div className="form-check">
-                                <input 
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="sortOptions"
-                                    id="departmentSort"
-                                    value="departmentSort"
-                                    onChange={this.handleSortChange}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="departmentSort"
-                                >
-                                    Department
-                                </label>
-                            </div>
-                            <div className="form-check">
-                                <input 
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="sortOptions"
-                                    id="roleSort"
-                                    value="roleSort"
-                                    onChange={this.handleSortChange}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="roleSort"
-                                >
-                                    Role
-                                </label>
-                            </div>
-                            <div className="form-check">
-                                <input 
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="sortOptions"
-                                    id="emailSort"
-                                    value="emailSort"
-                                    onChange={this.handleSortChange}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="emailSort"
-                                >
-                                    Email
-                                </label>
-                            </div>
-                            <div className="form-check">
-                                <input 
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="sortOptions"
-                                    id="DOBSort"
-                                    value="DOBSort"
-                                    onChange={this.handleSortChange}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="DOBSort"
-                                >    
-                                    DOB
-                                </label>
-                            </div>
-                        </div>
-                        <div className="col">
-                            <div className="form-check">
-                                <input
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="orderOptions"
-                                    id="ascending"
-                                    value="ascending"
-                                    onChange={this.handleOrderChange}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="ascending"
-                                >
-                                    Ascending
-                                </label>
-                            </div>
-                            <div className="form-check">
-                                <input
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="orderOptions"
-                                    id="descending"
-                                    value="descending"
-                                    onChange={this.handleOrderChange}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="descending"
-                                >
-                                    Descending
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <div className="col">
-                            <button
-                                type="submit"
-                                className="btn btn-light"
-                                onClick={this.sort}
-                            >
-                                Add sort
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </>
-        })
-    }
+  mapColumnHeaders = () => {
+    const columnHeaders = ["Image", "Name", "Email", "Phone", "DOB"];
 
-    render() {
+    return columnHeaders.map((columnHeader, i) => {
+      if (columnHeader === "Image") {
         return (
-            <>
-                <Title>Employees</Title>
-                <FilterButton 
-                    filterOptions={this.state.filterOptions}
-                />
-                <SortButton
-                    sortView={this.state.sortView}
-                />
-                <table className="table table-striped">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Department</th>
-                            <th>Role</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>DOB</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.employees.map(employee => (
-                        <EmployeeListItem
-                            removeEmployee={this.removeEmployee}
-                            id={employee.id}
-                            key={employee.id}
-                            firstName={employee.firstName}
-                            lastName={employee.lastName}
-                            department={employee.department}
-                            role={employee.role}
-                            email={employee.email}
-                            phone={employee.phone}
-                            DOB={employee.DOB}
-                        />
-                        ))}
-                    </tbody>
-                </table>
-            </>
+          <th key={i} onClick={this.handleSortToggle} id="imageHeader">
+            {columnHeader}
+          </th>
         );
+      } else {
+        return (
+          <th key={i} onClick={this.handleSortToggle} data-name={columnHeader}>
+            {columnHeader}
+            {this.state.sorted[columnHeader] ? (
+              this.state.isToggleUp ? (
+                <UpIcon
+                  data-name={columnHeader}
+                  style={{ marginLeft: "5px" }}
+                />
+              ) : (
+                <DownIcon
+                  data-name={columnHeader}
+                  style={{ marginLeft: "5px" }}
+                />
+              )
+            ) : (
+              ""
+            )}
+            <Search
+              search={this.state.search[columnHeader]}
+              columnHeader={columnHeader}
+              handleChange={this.handleChange}
+              handleBackspace={this.handleBackspace}
+              handleFormSubmit={this.handleFormSubmit}
+            />
+          </th>
+        );
+      }
+    });
+  };
+
+  handleSortToggle = async (event) => {
+    const columnHeader = event.target.dataset.name;
+
+    if (columnHeader === "Name") {
+      this.setState({
+        sorted: {
+          Name: true,
+          Email: false,
+          Phone: false,
+          DOB: false,
+        },
+      });
+    } else if (columnHeader === "Email") {
+      this.setState({
+        sorted: {
+          Name: false,
+          Email: true,
+          Phone: false,
+          DOB: false,
+        },
+      });
+    } else if (columnHeader === "Phone") {
+      this.setState({
+        sorted: {
+          Name: false,
+          Email: false,
+          Phone: true,
+          DOB: false,
+        },
+      });
+    } else if (columnHeader === "DOB") {
+      this.setState({
+        sorted: {
+          Name: false,
+          Email: false,
+          Phone: false,
+          DOB: true,
+        },
+      });
     }
+
+    this.state.isToggleUp
+      ? await this.setState({ isToggleUp: false })
+      : await this.setState({ isToggleUp: true });
+
+    this.sortEmployees(columnHeader, this.state.isToggleUp);
+  };
+
+  sortEmployees = (columnHeader, isToggleUp) => {
+    if (isToggleUp) {
+      switch (columnHeader) {
+        case "Name":
+          this.state.employees.sort((a, b) =>
+            a.name.first > b.name.first ? 1 : -1
+          );
+          break;
+        case "Email":
+          this.state.employees.sort((a, b) => (a.email > b.email ? 1 : -1));
+          break;
+        case "Phone":
+          this.state.employees.sort((a, b) => (a.phone > b.phone ? 1 : -1));
+          break;
+        case "DOB":
+          this.state.employees.sort((a, b) =>
+            new Date(a.dob.date) > new Date(b.dob.date) ? 1 : -1
+          );
+          break;
+        default:
+          return;
+      }
+    } else {
+      switch (columnHeader) {
+        case "Name":
+          this.state.employees.sort((a, b) =>
+            a.name.first < b.name.first ? 1 : -1
+          );
+          break;
+        case "Email":
+          this.state.employees.sort((a, b) => (a.email < b.email ? 1 : -1));
+          break;
+        case "Phone":
+          this.state.employees.sort((a, b) => (a.phone < b.phone ? 1 : -1));
+          break;
+        case "DOB":
+          this.state.employees.sort((a, b) =>
+            new Date(a.dob.date) < new Date(b.dob.date) ? 1 : -1
+          );
+          break;
+        default:
+          return;
+      }
+    }
+    this.setState({
+      employees: this.state.employees,
+    });
+  };
+
+  render() {
+    return (
+      <>
+        <Table striped bordered>
+          <thead>
+            <tr>{this.mapColumnHeaders()}</tr>
+          </thead>
+          <tbody>
+            {this.state.employees.map((employee) => (
+              <EmployeeListItem
+                // removeEmployee={this.removeEmployee}
+                key={employee.id.value}
+                image={employee.picture.thumbnail}
+                firstName={employee.name.first}
+                lastName={employee.name.last}
+                email={employee.email}
+                phone={employee.phone}
+                dob={employee.dob.date}
+              />
+            ))}
+          </tbody>
+        </Table>
+      </>
+    );
+  }
 }
 
 export default EmployeeTable;

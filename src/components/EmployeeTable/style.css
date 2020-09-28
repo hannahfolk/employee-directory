@@ -1,0 +1,11 @@
+th:hover {
+  cursor: pointer;
+}
+
+#imageHeader {
+  vertical-align: top;
+}
+
+#imageHeader:hover {
+  cursor: auto;
+}

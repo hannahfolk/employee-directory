@@ -2,15 +2,17 @@ import React from "react";
 import "./style.css";
 
 function EmployeeListItem(props) {
+  const { image, firstName, lastName, email, phone, dob } = props;
   return (
     <tr>
-      <th className="employee-list-item"><span onClick={() => props.removeEmployee(props.id)} className="remove">x</span></th>
-      <th className="employee-list-item">{`${props.firstName} ${props.lastName}`}</th>
-      <th className="employee-list-item">{props.department}</th>
-      <th className="employee-list-item">{props.role}</th>
-      <th className="employee-list-item">{props.email}</th>
-      <th className="employee-list-item">{props.phone}</th>
-      <th className="employee-list-item">{props.DOB}</th>
+      {/* <th className="employee-list-item"><span onClick={() => removeEmployee(id)} className="remove">x</span></th> */}
+      <th className="employee-list-item">
+        <img src={image} alt={`${firstName} ${lastName}`}></img>
+      </th>
+      <th className="employee-list-item">{`${firstName} ${lastName}`}</th>
+      <th className="employee-list-item">{email}</th>
+      <th className="employee-list-item">{phone}</th>
+      <th className="employee-list-item">{dob}</th>
     </tr>
   );
 }

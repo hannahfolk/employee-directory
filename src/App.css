@@ -1,0 +1,20 @@
+body {
+  margin: 0;
+}
+
+.jumbotron {
+  padding: 20px;
+  background-color: #7c39ed;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.display-4 {
+  color: white;
+  font-size: 2rem;
+}
+
+.lead {
+  color: white;
+  font-size: 1rem;
+}
