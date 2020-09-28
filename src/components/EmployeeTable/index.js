@@ -105,29 +105,31 @@ class EmployeeTable extends Component {
     return columnHeaders.map((columnHeader, i) => {
       if (columnHeader === "Image") {
         return (
-          <th key={i} onClick={this.handleSortToggle} id="imageHeader">
+          <th key={i} id="imageHeader">
             {columnHeader}
           </th>
         );
       } else {
         return (
-          <th key={i} onClick={this.handleSortToggle} data-name={columnHeader}>
-            {columnHeader}
-            {this.state.sorted[columnHeader] ? (
-              this.state.isToggleUp ? (
-                <UpIcon
-                  data-name={columnHeader}
-                  style={{ marginLeft: "5px" }}
-                />
+          <th key={i}  data-name={columnHeader}>
+            <div class="columnHeader" onClick={this.handleSortToggle}>
+              {columnHeader}
+              {this.state.sorted[columnHeader] ? (
+                this.state.isToggleUp ? (
+                  <UpIcon
+                    data-name={columnHeader}
+                    style={{ marginLeft: "5px" }}
+                  />
+                ) : (
+                  <DownIcon
+                    data-name={columnHeader}
+                    style={{ marginLeft: "5px" }}
+                  />
+                )
               ) : (
-                <DownIcon
-                  data-name={columnHeader}
-                  style={{ marginLeft: "5px" }}
-                />
-              )
-            ) : (
-              ""
-            )}
+                ""
+              )}
+            </div>
             <Search
               search={this.state.search[columnHeader]}
               columnHeader={columnHeader}
