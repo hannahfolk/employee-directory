@@ -111,8 +111,8 @@ class EmployeeTable extends Component {
         );
       } else {
         return (
-          <th key={i}  data-name={columnHeader}>
-            <div class="columnHeader" onClick={this.handleSortToggle}>
+          <th key={i}>
+            <div className="columnHeader" data-name={columnHeader} onClick={this.handleSortToggle}>
               {columnHeader}
               {this.state.sorted[columnHeader] ? (
                 this.state.isToggleUp ? (
@@ -250,7 +250,6 @@ class EmployeeTable extends Component {
           <tbody>
             {this.state.employees.map((employee) => (
               <EmployeeListItem
-                // removeEmployee={this.removeEmployee}
                 key={employee.id.value}
                 image={employee.picture.thumbnail}
                 firstName={employee.name.first}
